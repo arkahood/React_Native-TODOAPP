@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 import EachCard from './EachCard';
 
-const Todo = () => {
+const Todo = ({navigation}: any) => {
   const [data, setData] = useState(0);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -68,7 +68,7 @@ const Todo = () => {
             height: 35,
             margin: 10,
           }}>
-          <Text style={{color: 'white'}}>Button</Text>
+          <Text style={{color: 'white'}}>ADD</Text>
         </View>
       </TouchableOpacity>
       <FlatList
@@ -79,6 +79,7 @@ const Todo = () => {
             description={item.description}
             handleDelete={(id: any) => handleDelete(id)}
             id={item.id}
+            navigation={navigation}
           />
         )}
         keyExtractor={(i: any) => i.id}

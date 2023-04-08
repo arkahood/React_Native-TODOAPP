@@ -21,40 +21,35 @@ import {
 } from 'react-native';
 import EachCard from './components/EachCard';
 import Todo from './components/Todo';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import EachTodo from './components/EachTodo';
 
+const stack = createNativeStackNavigator();
 function App(): JSX.Element {
-  const [data, setData] = useState(0);
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [todo, setTodo] = useState([]);
-
-  const increaseIt = () => {
-    if (title.length === 0) console.warn('Plase Enter Title');
-    else if (description.length === 0) console.warn('Please Enter Description');
-    else {
-      setData(oldState => oldState + 1);
-      setTodo((oldData): any => {
-        return [...oldData, {id: data, title: title, description: description}];
-      });
-      setTitle('');
-      setDescription('');
-    }
-  };
-  const handleDelete = (id: any) => {
-    let myArray = todo.filter((obj: any) => {
-      return obj.id !== id;
-    });
-    setTodo(myArray);
-    setData((olddata: any) => olddata - 1);
-  };
   return (
-    <SafeAreaView style={{flex: 1}}>
-      <StatusBar backgroundColor={'black'} />
-      <View style={style.Header}>
-        <Text style={style.HeaderText}>TODO APP</Text>
-      </View>
-      <Todo />
-    </SafeAreaView>
+    <NavigationContainer>
+      <SafeAreaView style={{flex: 1}}>
+        <StatusBar backgroundColor={'black'} />
+        {/* <View style={style.Header}>
+          <Text style={style.HeaderText}>TODO APP</Text>
+        </View> */}
+        <stack.Navigator>
+          <stack.Screen
+            name="Home"
+            // component={Todo}
+            options={{title: 'TODO APP'}}>
+            {props => <Todo {...props} />}
+          </stack.Screen>
+          <stack.Screen
+            name="Expand"
+            options={{title: 'TODO APP'}}
+            initialParams={{title: 'Arka', des: 'Not'}}>
+            {props => <EachTodo {...props} />}
+          </stack.Screen>
+        </stack.Navigator>
+      </SafeAreaView>
+    </NavigationContainer>
   );
 }
 
